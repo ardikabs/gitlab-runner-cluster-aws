@@ -6,8 +6,8 @@ sudo yum update && sudo yum install -y wget
 
 # Installing and configuring Gitlab Runner
 sudo wget -O /usr/local/bin/gitlab-runner https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
-sudo curl --output /usr/bin/docker-credential-ecr-login https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.4.0/linux-amd64/docker-credential-ecr-login
-sudo chmod +x /usr/bin/{gitlab-runner,docker-credential-ecr-login}
+sudo curl --output /usr/local/bin/docker-credential-ecr-login https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/0.4.0/linux-amd64/docker-credential-ecr-login
+sudo chmod +x /usr/local/bin/{gitlab-runner,docker-credential-ecr-login}
 sudo useradd \
   --comment 'GitLab Runner' \
   --create-home \
@@ -47,8 +47,8 @@ cat > ~/register-gitlab-runner.sh << EOF
   --request-concurrency 4 \
   --executor "docker" \
   --description "Super GitLabCI Runner" \
-  --docker-volumes "/var/run/docker.sock:/var/run/docker.sock \
-  --docker-volumes "/usr/bin/docker-credential-ecr-login:/usr/bin/docker-credential-ecr-login" \
+  --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
+  --docker-volumes "/usr/local/bin/docker-credential-ecr-login:/usr/bin/docker-credential-ecr-login" \
   --docker-image "docker:latest" \
   --docker-tlsverify false \
   --docker-disable-cache false \
